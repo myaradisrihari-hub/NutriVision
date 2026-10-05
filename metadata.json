@@ -1,0 +1,6 @@
+{
+  "name": "NutriVision AI – Intelligent Nutrition Analyzer",
+  "description": "Intelligent multi-food recognition and automated nutrition calculation from food images using AI vision.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

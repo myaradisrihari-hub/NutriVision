@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: nutrivision_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: nutrivision
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: nutrivision_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Full-Stack Application (Frontend + Express API Server)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nutrivision_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgresql://nutrivision:secretpassword@postgres:5432/nutrivision_db
+      - JWT_SECRET=nutrivision-secure-jwt-academic-secret-key-2025
+      - AI_PROVIDER=gemini
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
